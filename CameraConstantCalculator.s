@@ -11,7 +11,7 @@ Class MainDialogClass:UIFrame {
 		TagGroup box=dlgcreatebox("", box_items).dlginternalpadding(14,10)
 		Dialog.dlgaddelement(box)		
 
-		TagGroup labelR = DLGCreateLabel("R / Physical Pixel Size (µm):")
+		TagGroup labelR = DLGCreateLabel("R / Physical Pixel Size (Ä¾m):")
 		realfieldR = DLGCreateRealField(15, 10, 2).DLGidentifier("physicalPixelSize")
 		Taggroup buttonCalcR = DLGCreatePushButton("Calculate","calculateR")
 		TagGroup groupFromR = DLGgroupitems(labelR,realfieldR,buttonCalcR).dlgtablelayout(3,1,0).DLGAnchor("East")
@@ -21,12 +21,12 @@ Class MainDialogClass:UIFrame {
 		Taggroup buttonCalcL = DLGCreatePushButton("Calculate","calculateL")
 		TagGroup groupFromL = DLGgroupitems(labelL,realfieldL,buttonCalcL).dlgtablelayout(3,1,0).DLGAnchor("East")
 		
-		TagGroup labelLambda = DLGCreateLabel("Lambda / Wavelength (Å):")
+		TagGroup labelLambda = DLGCreateLabel("Lambda / Wavelength (Ä¹):")
 		realfieldLambda = DLGCreateRealField(0.0251, 10, 5).DLGidentifier("lambda")
 		TagGroup buttonCalcLambda = DLGCreatePushButton("Calculate","calculateLambda")
 		TagGroup groupFromLambda = DLGgroupitems(labelLambda,realfieldLambda,buttonCalcLambda).dlgtablelayout(3,1,0).DLGAnchor("East")
 		
-		TagGroup labelPixelCali = DLGCreateLabel("d-1 / Pixel Calibration (Å-1):")
+		TagGroup labelPixelCali = DLGCreateLabel("d-1 / Pixel Calibration (Ä¹-1):")
 		realfieldPixelCali = DLGCreateRealField(0.002988, 10, 4).DLGidentifier("pixelCali")
 		TagGroup buttonCalcPixelCali = DLGCreatePushButton("Calculate","calculatePixelCali")
 		TagGroup groupFromPixelCali = DLGgroupitems(labelPixelCali,realfieldPixelCali,buttonCalcPixelCali).dlgtablelayout(3,1,0).DLGAnchor("East")
@@ -82,7 +82,7 @@ Class MainDialogClass:UIFrame {
 	
 	void waveInfo(object self){
 	
-		Result("\nHT(kV) | Wavelength(Å)\n")
+		Result("\nHT(kV) | Wavelength(Ä¹)\n")
 		Result("----------------------\n")
 		Result(" 80    |    0.0418\n")
 		Result(" 100   |    0.0370\n")
