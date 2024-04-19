@@ -1,0 +1,8 @@
+image targetImg := GetFrontImage()
+imageDisplay vectordisp=targetImg.imageGetImageDisplay(0)
+component line1 = newLineAnnotation(1,1,targetImg.ImageGetDimensionSize(0),targetImg.ImageGetDimensionSize(1))
+line1.componentsetforegroundcolor(1,0,0)
+vectordisp.componentaddchildatbeginning(line1)
+component line2 = newLineAnnotation(1,targetImg.ImageGetDimensionSize(0),targetImg.ImageGetDimensionSize(1),1)
+line2.componentsetforegroundcolor(1,0,0)
+vectordisp.componentaddchildatbeginning(line2)
