@@ -248,7 +248,7 @@ Class MainDialogClass:UIFrame {
 	//Constructor
 	MainDialogClass(object self) {
 		self.init(self.MainFrame())
-		self.display("Contrast Changer").WindowSetFramePosition(500, 300 )
+		self.display("Contrast Image Modifier").WindowSetFramePosition(500, 300 )
 	}
 	
 	//Destructor
@@ -260,7 +260,7 @@ Class MainDialogClass:UIFrame {
 // Main function which allocates both classes
 void theMainFunctionToRun() {
 	Result("\n---------------------------------------------------------------------------------------------------------\n")
-	Result("\nContrast Changer v1.0, Sergi Plana Ruiz, Universitat Rovira i Virgili (Tarragona), July 2022.\n")
+	Result("\nContrast Image Modifier v1.0, Sergi Plana Ruiz, Universitat Rovira i Virgili (Tarragona), July 2022.\n")
 	Alloc(MainDialogClass)
 }
 		
