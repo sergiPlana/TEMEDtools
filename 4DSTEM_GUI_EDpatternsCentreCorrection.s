@@ -1,5 +1,5 @@
-TagGroup intfieldXposROI, intfieldYposROI, intfieldsizeROI
-number sizeDPx, sizeDPy, sizeMAPx, sizeMAPy, crop_x, crop_y, sizeVal
+TagGroup intfieldXposROI, intfieldYposROI, intfieldsizeROI, realfieldThreshFit
+number sizeDPx, sizeDPy, sizeMAPx, sizeMAPy, crop_x, crop_y, sizeVal,threshFit
 image DI, foundCentersX, foundCentersY
 
 //Dialog class
@@ -28,7 +28,7 @@ Class MainDialogClass:UIFrame {
 		paramROIforXcorr_items.dlgaddelement(GetRoiParamsBut)
 			
 
-		TagGroup labelXposROI = DLGCreateLabel("X-pos (pix):").DLGAnchor("East")
+		TagGroup labelXposROI = DLGCreateLabel("X-pos (px):").DLGAnchor("East")
 		intfieldXposROI = DLGCreateIntegerField(70, 5).DLGidentifier("crop_x").DLGAnchor("East")
 		DLGvalue(intfieldXposROI,70)
 		crop_x=70
@@ -39,7 +39,7 @@ Class MainDialogClass:UIFrame {
 		TagGroup crop_xPart = DLGgroupitems(FirstPartcrop_x,SecondPartcrop_x).DLGtableLayout(2,1,0)
 		paramROIforXcorr_items.dlgaddelement(crop_xPart)
 		
-		TagGroup labelYposROI = DLGCreateLabel("Y-pos (pix):").DLGAnchor("East")
+		TagGroup labelYposROI = DLGCreateLabel("Y-pos (px):").DLGAnchor("East")
 		intfieldYposROI = DLGCreateIntegerField(74, 5).DLGidentifier("crop_y").DLGAnchor("East")
 		DLGvalue(intfieldYposROI,74)
 		crop_y=74
@@ -50,7 +50,7 @@ Class MainDialogClass:UIFrame {
 		TagGroup crop_yPart = DLGgroupitems(FirstPartcrop_y,SecondPartcrop_y).DLGtableLayout(2,1,0)
 		paramROIforXcorr_items.dlgaddelement(crop_yPart)
 		
-		TagGroup labelsizeROI = DLGCreateLabel("Size (pix):").DLGAnchor("East")
+		TagGroup labelsizeROI = DLGCreateLabel("Size (px):").DLGAnchor("East")
 		intfieldsizeROI = DLGCreateIntegerField(120, 5).DLGidentifier("sizeROI").DLGAnchor("East")
 		DLGvalue(intfieldsizeROI,120)
 		sizeVal=120
@@ -66,6 +66,15 @@ Class MainDialogClass:UIFrame {
 		TagGroup XcorrButton=DLGCreatePushButton("3. Get X-correlation shfits from edges", "xcorrBut").DLGenabled(0)
 		XcorrButton.dlgidentifier("xcorrBut_iden").dlginternalpadding(2,0)
 		box_items.dlgaddelement(XcorrButton)
+		
+		TagGroup Xcorr_linCorrButton=DLGCreatePushButton("3.1 Linear adjust. to X-corr shifts", "xcorrLinCorBut").DLGenabled(0)
+		Xcorr_linCorrButton.dlgidentifier("xcorrlinCorrBut_iden").dlginternalpadding(2,0)
+		TagGroup labellinCorr = DLGCreateLabel("Thres.(px):").DLGAnchor("East")
+		realfieldThreshFit = DLGCreateRealField(2.0, 4,5).DLGidentifier("threshFitValue").DLGAnchor("East")
+		DLGvalue(realfieldThreshFit,2.0)
+		threshFit = 2.0
+		TagGroup fitBox = DLGgroupitems(Xcorr_linCorrButton,labellinCorr,realfieldThreshFit).DLGtableLayout(3,1,0)
+		box_items.dlgaddelement(fitBox)
 		
 		TagGroup applyCorrBut = DLGCreatePushButton("4. Apply center correction","applyCorrFunc").DLGenabled(0)
 		applyCorrBut.dlgidentifier("applyCorr_iden").dlginternalpadding(2,0)
@@ -210,7 +219,36 @@ Class MainDialogClass:UIFrame {
 		disp.LinePlotImageDisplaySetSliceComponentColor( 1, 0, 0, 0, 1 )
 		disp.LinePlotImageDisplaySetLegendShown( 1 )
 		imageDoc.ImageDocumentShow()
-		self.SetElementisEnabled("applyCorr_iden",1)	
+		self.SetElementisEnabled("applyCorr_iden",1)
+		self.SetElementisEnabled("xcorrlinCorrBut_iden",1)
+		
+	}
+	
+	void xcorrLinCorBut(object self){
+		
+		threshFit = DLGgetValue(self.LookUpElement("threshFitValue"))
+		number deltaX_firstRow = FoundCentersX.GetPixel(sizeMAPx-1,0)/sizeMAPx
+		number deltaY_firstRow = FoundCentersY.GetPixel(sizeMAPx-1,0)/sizeMAPx
+		number deltaX_firstColumn = FoundCentersX.GetPixel(sizeMAPx+sizeMAPy-2,0)/sizeMAPy
+		number deltaY_firstColumn = FoundCentersY.GetPixel(sizeMAPx+sizeMAPy-2,0)/sizeMAPy
+	
+		number DPindex=0
+		for ( number posY = 0; posY < sizeMAPy; posY++ ) {
+			if (posY == 0) {
+				for ( number posX = 0; posX < sizeMAPx; posX++ ) {
+					if (abs(abs(foundCentersX.getPixel(DPindex,0))-abs(deltaX_firstRow*posX)) > threshFit) foundCentersX[DPindex,DPindex+1] = deltaX_firstRow*posX
+					if (abs(abs(foundCentersY.getPixel(DPindex,0))-abs(deltaY_firstRow*posX)) > threshFit) foundCentersY[DPindex,DPindex+1] = deltaY_firstRow*posX
+					DPindex += 1
+				}
+			} else {
+				if (abs(abs(foundCentersX.getPixel(DPindex,0))-abs(deltaX_firstColumn*posY)) > threshFit) foundCentersX[DPindex,DPindex+1] = deltaX_firstColumn*posY
+				if (abs(abs(foundCentersY.getPixel(DPindex,0))-abs(deltaY_firstColumn*posY)) > threshFit) foundCentersY[DPindex,DPindex+1] = deltaY_firstColumn*posY
+				DPindex += 1
+			}
+
+		}
+		
+		Result("\nLinear adjustment applied to X-correlation shifts with a maximum deviations of "+threshFit+" pixels.")
 	}
 	
 	//Apply the centre correction to the 4D-STEM dataset
@@ -276,6 +314,10 @@ Class MainDialogClass:UIFrame {
 		number cutOffsetY = max(shiftMatrix[0,1,0,sizeMAPx*sizeMAPy,2,1])
 		number cutOffsetX_end = min(shiftMatrix[0,0,0,sizeMAPx*sizeMAPy,1,1])
 		number cutOffsetY_end = min(shiftMatrix[0,1,0,sizeMAPx*sizeMAPy,2,1])
+		if (cutOffsetX < 0) cutOffsetX = 0
+		if (cutOffsetY < 0) cutOffsetY = 0
+		if (cutOffsetX_end > 0) cutOffsetX_end = 0
+		if (cutOffsetY_end > 0) cutOffsetY_end = 0
 		final4Ddata := final4Ddata.sliceN(4, 4, cutOffsetX, cutOffsetY, 0, 0, 0, sizeDPx-cutOffsetX+cutOffsetX_end, 1, 1, sizeDPy-cutOffsetY+cutOffsetY_end, 1, 2, sizeMAPx, 1, 3, sizeMAPy, 1)
 		showimage(final4Ddata)
 		SetName(getfrontimage(), DI.GetName()+"_shifted")
