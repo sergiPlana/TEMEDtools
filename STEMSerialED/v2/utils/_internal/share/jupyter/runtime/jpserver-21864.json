@@ -1,0 +1,13 @@
+{
+  "base_url": "/",
+  "hostname": "localhost",
+  "password": false,
+  "pid": 21864,
+  "port": 8888,
+  "root_dir": "C:\\Users\\Sergi Plana Ruiz",
+  "secure": false,
+  "sock": "",
+  "token": "add95416957a3a2a3f1d9e2aaf9511f60793a6e97b0f2c93",
+  "url": "http://localhost:8888/",
+  "version": "1.18.1"
+}

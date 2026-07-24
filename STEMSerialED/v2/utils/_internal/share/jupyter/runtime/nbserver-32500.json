@@ -1,0 +1,12 @@
+{
+  "base_url": "/",
+  "hostname": "localhost",
+  "notebook_dir": "D:\\STOCa\\Vagelis_tests",
+  "password": false,
+  "pid": 32500,
+  "port": 8888,
+  "secure": false,
+  "sock": "",
+  "token": "a4f78d0cfa90ec8d23b5dc6bfb72898e39374a1cd5f7e699",
+  "url": "http://localhost:8888/"
+}

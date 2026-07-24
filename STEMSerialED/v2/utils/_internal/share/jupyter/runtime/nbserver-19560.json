@@ -1,0 +1,12 @@
+{
+  "base_url": "/",
+  "hostname": "localhost",
+  "notebook_dir": "D:\\4D-STEM\\ICMAB_Strain\\Strain_Lamella_C_STO-LSMO-LFO100nm",
+  "password": false,
+  "pid": 19560,
+  "port": 8888,
+  "secure": false,
+  "sock": "",
+  "token": "16421c8d030c7930f886241720cfd2d5f04643c04d278e68",
+  "url": "http://localhost:8888/"
+}

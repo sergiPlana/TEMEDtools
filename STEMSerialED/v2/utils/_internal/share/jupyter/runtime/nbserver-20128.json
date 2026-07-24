@@ -1,0 +1,12 @@
+{
+  "base_url": "/",
+  "hostname": "localhost",
+  "notebook_dir": "D:\\dynSimulations",
+  "password": false,
+  "pid": 20128,
+  "port": 8888,
+  "secure": false,
+  "sock": "",
+  "token": "7868ea87ec437f4bb14ef91ad14ccefa9d85f7aebc1cd0a8",
+  "url": "http://localhost:8888/"
+}

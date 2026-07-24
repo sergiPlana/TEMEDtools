@@ -1,0 +1,12 @@
+{
+  "base_url": "/",
+  "hostname": "localhost",
+  "notebook_dir": "D:\\ImageSegmentation",
+  "password": false,
+  "pid": 14464,
+  "port": 8888,
+  "secure": false,
+  "sock": "",
+  "token": "4101e1757fc89e47e1f1e175e5106b5f3cd09f979a122741",
+  "url": "http://localhost:8888/"
+}
